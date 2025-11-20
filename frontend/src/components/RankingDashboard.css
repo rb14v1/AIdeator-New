@@ -1,0 +1,81 @@
+/* src/components/RankingDashboard.css */
+
+.dashboard-container {
+    max-width: 1000px;
+    margin: 2rem auto;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    background-color: #ffffff;
+}
+
+.dashboard-container h2 {
+    text-align: center;
+    margin-bottom: 0.5rem;
+    color: #333;
+}
+
+.dashboard-container p {
+    text-align: center;
+    margin-bottom: 2rem;
+    color: #666;
+    font-size: 0.9rem;
+}
+
+.ideas-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+    font-size: 0.95rem;
+}
+
+.ideas-table thead th {
+    background-color: #f8f9fa;
+    color: #343a40;
+    font-weight: 600;
+    text-align: left;
+    border-bottom: 2px solid #dee2e6;
+}
+
+.ideas-table th,
+.ideas-table td {
+    padding: 12px 15px;
+    border: 1px solid #e9ecef;
+    vertical-align: middle;
+}
+
+.ideas-table tbody tr:nth-child(even) {
+    background-color: #f8f9fa;
+}
+
+.ideas-table tbody tr:hover {
+    background-color: #e9ecef;
+}
+
+.ideas-table td:first-child {
+    font-weight: bold;
+    text-align: center;
+    color: #0056b3;
+}
+
+.score-cell {
+    font-weight: bold;
+    text-align: center;
+    color: white;
+    border-radius: 4px;
+    padding: 5px 10px;
+    display: inline-block; /* Allows for padding and radius */
+    min-width: 50px;
+}
+
+/* Color coding for scores: High (3), Medium (2), Low (1) */
+.score-3 {
+    background-color: #28a745; /* Green for High */
+}
+.score-2 {
+    background-color: #ffc107; /* Yellow for Medium */
+    color: #333; /* Darker text for yellow background */
+}
+.score-1 {
+    background-color: #dc3545; /* Red for Low */
+}
