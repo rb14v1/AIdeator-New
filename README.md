@@ -40,7 +40,7 @@ Aideator is a secure, enterprise-grade web platform designed to streamline struc
 ---
 
 ##  Folder Structure
-
+```
 ### Backend (`aideator/backend/`)
 aideator/ # Django project (renamed from aideator_backend) 
 ├── settings.py 
@@ -71,7 +71,7 @@ src/
 ├── index.html 
 vite.config.js 
 package.json
-
+```
 
 ---
 
