@@ -11,7 +11,7 @@ const ConversationPage = () => {
         const fetchConversation = async () => {
             const token = localStorage.getItem("accessToken");
             try {
-                const res = await axios.get(`http://13.222.154.187/api/conversation/${conversationId}/`, {
+                const res = await axios.get(`/api/conversation/${conversationId}/`, {
                     headers: { Authorization: `Bearer ${token}` }
                 });
 

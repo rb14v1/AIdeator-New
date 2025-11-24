@@ -13,7 +13,7 @@ const IdeaListPage = () => {
     const fetchIdeas = async () => {
       try {
         const token = localStorage.getItem("accessToken");
-        const res = await axios.get("http://13.222.154.187/api/ranked/", {
+        const res = await axios.get("/api/ranked/", {
           headers: { Authorization: `Bearer ${token}` }
         });
 

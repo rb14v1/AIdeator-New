@@ -13,7 +13,7 @@ const Login = () => {
 
     const validateToken = async () => {
       try {
-        const res = await axios.get("http://13.222.154.187/api/user/", {
+        const res = await axios.get("/api/user/", {
           headers: { Authorization: `Bearer ${token}` },
         });
 
@@ -37,7 +37,7 @@ const Login = () => {
   setError("");
 
   try {
-    const res = await axios.post("http://13.222.154.187/api/token/", {
+    const res = await axios.post("/api/token/", {
       email: data.email,
       password: data.password,
     });
@@ -46,7 +46,7 @@ const Login = () => {
     localStorage.setItem("accessToken", access);
     localStorage.setItem("refreshToken", refresh);
 
-    const userRes = await axios.get("http://13.222.154.187/api/user/", {
+    const userRes = await axios.get("/api/user/", {
       headers: { Authorization: `Bearer ${access}` },
     });
 
