@@ -40,16 +40,38 @@ Aideator is a secure, enterprise-grade web platform designed to streamline struc
 ---
 
 ##  Folder Structure
-
+```
 ### Backend (`aideator/backend/`)
-aideator/ # Django project (renamed from aideator_backend) ├── settings.py ├── urls.py ├── wsgi.py conversations/ # Core app ├── models.py ├── views.py ├── serializers.py ├── admin.py ├── services/ai_service.py ├── utils/email.py ├── tests.py manage.py requirements.txt Procfile .ebextensions/
+aideator/ # Django project (renamed from aideator_backend) 
+├── settings.py 
+├── urls.py 
+├── wsgi.py conversations/ 
 
-Code
+# Core app 
+├── models.py 
+├── views.py 
+├── serializers.py 
+├── admin.py 
+├── services/ai_service.py 
+├── utils/email.py 
+├── tests.py
+manage.py 
+requirements.txt 
+Procfile 
+.ebextensions/
 
 ### Frontend (`aideator/frontend/`)
-src/ ├── components/Chatbot/ ├── components/admin/ ├── pages/ ├── api/api.js ├── App.jsx ├── main.jsx public/ ├── index.html vite.config.js package.json
-
-Code
+src/ 
+├── components/Chatbot/ 
+├── components/admin/ 
+├── pages/ 
+├── api/api.js 
+├── App.jsx 
+├── main.jsx public/ 
+├── index.html 
+vite.config.js 
+package.json
+```
 
 ---
 
