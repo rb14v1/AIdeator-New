@@ -90,7 +90,7 @@ const fetchStats = async () => {
     return;
   }
   try {
-    const res = await axios.get("http://localhost:8000/api/dashboard-stats/", {
+    const res = await axios.get("http://13.222.154.187/api/dashboard-stats/", {
       headers: { Authorization: `Bearer ${token}` }
     });
 
@@ -116,7 +116,7 @@ useEffect(() => {
     const fetchUserIdeas = async () => {
       try {
         const token = localStorage.getItem("accessToken");
-        const res = await axios.get("http://localhost:8000/api/ranked/", {
+        const res = await axios.get("http://13.222.154.187/api/ranked/", {
           headers: { Authorization: `Bearer ${token}` }
         });
 
@@ -152,7 +152,7 @@ useEffect(() => {
   const handleReject = async (id) => {
     try {
       const token = localStorage.getItem("accessToken");
-      await axios.post(`http://localhost:8000/api/${id}/disapprove/`, {}, {
+      await axios.post(`http://13.222.154.187/api/${id}/disapprove/`, {}, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setUserIdeas(prev => prev.filter(idea => idea.id !== id));
@@ -164,7 +164,7 @@ useEffect(() => {
   const handleApprove = async (id) => {
   try {
     const token = localStorage.getItem("accessToken");
-    await axios.post(`http://localhost:8000/api/${id}/approve/`, {}, {
+    await axios.post(`http://13.222.154.187/api/${id}/approve/`, {}, {
       headers: { Authorization: `Bearer ${token}` }
     });
     setUserIdeas(prev => prev.filter(idea => idea.id !== id));
@@ -192,7 +192,7 @@ useEffect(() => {
     const fetchChats = async () => {
       try {
         const token = localStorage.getItem("accessToken");
-        const res = await axios.get("http://localhost:8000/api/recent-chats/", {
+        const res = await axios.get("http://13.222.154.187/api/recent-chats/", {
           headers: { Authorization: `Bearer ${token}` }
         });
 
@@ -217,7 +217,7 @@ useEffect(() => {
 
     const fetchUsers = async () => {
       try {
-        const res = await axios.get("http://localhost:8000/api/recent-users/", {
+        const res = await axios.get("http://13.222.154.187/api/recent-users/", {
           headers: { Authorization: `Bearer ${token}` }
         });
         console.log("Recent Users:", res.data);
@@ -230,7 +230,7 @@ useEffect(() => {
 
     const fetchRankings = async () => {
       try {
-        const res = await axios.get("http://localhost:8000/api/user-rankings/", {
+        const res = await axios.get("http://13.222.154.187/api/user-rankings/", {
           headers: { Authorization: `Bearer ${token}` }
         });
         console.log("User Rankings:", res.data);
@@ -260,7 +260,7 @@ useEffect(() => {
     }
 
     axios
-      .get(`http://localhost:8000/api/weekly-activity/?range=${range}`, {
+      .get(`http://13.222.154.187/api/weekly-activity/?range=${range}`, {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => {
@@ -329,7 +329,7 @@ useEffect(() => {
     setSelectedUserId(userId);
     const token = localStorage.getItem("accessToken");
     try {
-      const res = await axios.get(`http://localhost:8000/api/user-ideas/${userId}/`, {
+      const res = await axios.get(`http://13.222.154.187/api/user-ideas/${userId}/`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setRecentUserIdeas(res.data); 
@@ -342,7 +342,7 @@ useEffect(() => {
   const handleIdeaClick = async (conversationId) => {
     const token = localStorage.getItem("accessToken");
     try {
-      const res = await axios.get(`http://localhost:8000/api/conversation/${conversationId}/`, {
+      const res = await axios.get(`http://13.222.154.187/api/conversation/${conversationId}/`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setSelectedConversation(res.data);

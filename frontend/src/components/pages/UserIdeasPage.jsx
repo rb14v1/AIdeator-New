@@ -12,7 +12,7 @@ const UserIdeasPage = () => {
     const fetchIdeas = async () => {
       const token = localStorage.getItem("accessToken");
       try {
-        const res = await axios.get(`http://localhost:8000/api/user-ideas/${userId}/`, {
+        const res = await axios.get(`http://13.222.154.187/api/user-ideas/${userId}/`, {
           headers: { Authorization: `Bearer ${token}` }
         });
         console.log("Fetched ideas:", res.data);

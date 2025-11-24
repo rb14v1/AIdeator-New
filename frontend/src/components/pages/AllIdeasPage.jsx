@@ -6,7 +6,7 @@ function AllIdeasPage() {
   const [ideas, setIdeas] = useState([]);
 
   useEffect(() => {
-    axios.get("http://localhost:8000/api/all-ideas", {
+    axios.get("http://13.222.154.187/api/all-ideas", {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("accessToken")}`
       }
