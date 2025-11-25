@@ -9,11 +9,9 @@ import ConversationPage from "./components/pages/ConversationPage";
 import AllIdeasPage from "./components/pages/AllIdeasPage";
 
 const Layout = ({ children }) => (
-  <div className="min-h-screen bg-teal-100 text-black flex justify-center items-start pt-10">
     <div className="w-full md:w-3/4 lg:w-2/3 xl:w-1/2 shadow-xl rounded-2xl overflow-hidden">
       {children}
     </div>
-  </div>
 );
 
 
@@ -28,15 +26,11 @@ const ProtectedRoute = ({ children, adminOnly = false }) => {
 };
 
 const UserPage = () => (
-  <Layout>
     <Chatbot />
-  </Layout>
 );
 
 const AdminPage = () => (
-  <Layout>
     <Dashboard />
-  </Layout>
 );
 
 function App() {
