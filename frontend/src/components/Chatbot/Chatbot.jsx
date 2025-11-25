@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import Message from "./Message";
 import MessageInput from "./MessageInput";
 import CloseButton from "./CloseButton";
+import API from "../../services/api"; 
 import ViewIdeas from "./ViewIdeas";
 
 const Chatbot = () => {
@@ -20,7 +21,7 @@ const Chatbot = () => {
   useEffect(() => {
     const startConversation = async () => {
       try {
-        const res = await API.post("/api/start", {}, {
+        const res = await API.post("/start/", {}, {
           headers: {
             Authorization: `Bearer ${token}`
           }
@@ -47,7 +48,7 @@ const Chatbot = () => {
     setMessages((prev) => [...prev, { sender: "user", text: message }]);
 
     try {
-      const res = await API.post("/api/respond/", {
+      const res = await API.post("/respond/", {
         conversation_id: conversationId,
         user_input: message.trim(),
         next_key: currentKey,
