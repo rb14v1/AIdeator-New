@@ -21,7 +21,7 @@ const Chatbot = () => {
   useEffect(() => {
     const startConversation = async () => {
       try {
-        const res = await API.post("/api/start/", {}, {
+        const res = await API.post("/api/start", {}, {
           headers: {
             Authorization: `Bearer ${token}`
           }

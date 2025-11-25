@@ -43,6 +43,7 @@ class ConversationTemplate(models.Model):
 
     def __str__(self):
         return self.name
+    
 
 #  Conversation state
 class ConversationState(models.Model):
