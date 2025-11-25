@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import Message from "./Message";
 import MessageInput from "./MessageInput";
 import CloseButton from "./CloseButton";
-import API from "../../services/api"; 
 import ViewIdeas from "./ViewIdeas";
 
 const Chatbot = () => {
