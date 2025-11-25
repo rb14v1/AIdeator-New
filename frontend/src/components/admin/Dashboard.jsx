@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import API from "../../services/api";
+import axios from "axios";
 import { submitIdea } from "../../services/submitIdea";
 import { useNavigate } from "react-router-dom";
 import dayjs from "dayjs";
@@ -90,7 +90,7 @@ function Dashboard() {
       return;
     }
     try {
-      const res = await axios.get("/dashboard-stats/", {
+      const res = await axios.get("/api/dashboard-stats/", {
         headers: { Authorization: `Bearer ${token}` }
       });
  
@@ -116,7 +116,7 @@ function Dashboard() {
     const fetchUserIdeas = async () => {
       try {
         const token = localStorage.getItem("accessToken");
-        const res = await axios.get("/ranked/", {
+        const res = await axios.get("/api/ranked/", {
           headers: { Authorization: `Bearer ${token}` }
         });
  
@@ -152,7 +152,7 @@ function Dashboard() {
   const handleReject = async (id) => {
     try {
       const token = localStorage.getItem("accessToken");
-      await axios.post(`/${id}/disapprove/`, {}, {
+      await axios.post(`/api/${id}/disapprove/`, {}, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setUserIdeas(prev => prev.filter(idea => idea.id !== id));
@@ -164,7 +164,7 @@ function Dashboard() {
   const handleApprove = async (id) => {
     try {
       const token = localStorage.getItem("accessToken");
-      await axios.post(`/${id}/approve/`, {}, {
+      await axios.post(`/api/${id}/approve/`, {}, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setUserIdeas(prev => prev.filter(idea => idea.id !== id));
@@ -192,7 +192,7 @@ function Dashboard() {
     const fetchChats = async () => {
       try {
         const token = localStorage.getItem("accessToken");
-        const res = await axios.get("/recent-chats/", {
+        const res = await axios.get("/api/recent-chats/", {
           headers: { Authorization: `Bearer ${token}` }
         });
  
@@ -217,7 +217,7 @@ function Dashboard() {
  
     const fetchUsers = async () => {
       try {
-        const res = await axios.get("/recent-users/", {
+        const res = await axios.get("/api/recent-users/", {
           headers: { Authorization: `Bearer ${token}` }
         });
         console.log("Recent Users:", res.data);
@@ -230,7 +230,7 @@ function Dashboard() {
  
     const fetchRankings = async () => {
       try {
-        const res = await axios.get("/user-rankings/", {
+        const res = await axios.get("/api/user-rankings/", {
           headers: { Authorization: `Bearer ${token}` }
         });
         console.log("User Rankings:", res.data);
@@ -260,7 +260,7 @@ function Dashboard() {
     }
  
     axios
-      .get(`/weekly-activity/?range=${range}`, {
+      .get(`/api/weekly-activity/?range=${range}`, {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => {
@@ -326,7 +326,7 @@ function Dashboard() {
     setSelectedUserId(userId);
     const token = localStorage.getItem("accessToken");
     try {
-      const res = await axios.get(`/user-ideas/${userId}/`, {
+      const res = await axios.get(`/api/user-ideas/${userId}/`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setRecentUserIdeas(res.data);
@@ -339,7 +339,7 @@ function Dashboard() {
   const handleIdeaClick = async (conversationId) => {
     const token = localStorage.getItem("accessToken");
     try {
-      const res = await axios.get(`/conversation/${conversationId}/`, {
+      const res = await axios.get(`/api/conversation/${conversationId}/`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setSelectedConversation(res.data);
@@ -659,3 +659,4 @@ function Dashboard() {
   );
 }
 export default Dashboard;
+ 

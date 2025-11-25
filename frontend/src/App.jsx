@@ -51,9 +51,7 @@ function App() {
         path="/all-ideas"
         element={
           <ProtectedRoute>
-            <Layout>
               <AllIdeasPage />
-            </Layout>
           </ProtectedRoute>
         }
       />
