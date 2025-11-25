@@ -3,21 +3,22 @@ import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import Header from "../Header";
 import Footer from "../Footer";
-
+ 
 const UserIdeasPage = () => {
   const { userId } = useParams();
   const [ideas, setIdeas] = useState([]);
   const navigate = useNavigate();
-
+ 
   useEffect(() => {
-    console.log("User ID:", userId);
     const fetchIdeas = async () => {
       const token = localStorage.getItem("accessToken");
       try {
-        const res = await axios.get(`/api/user-ideas/${userId}/`, {
-          headers: { Authorization: `Bearer ${token}` }
-        });
-        console.log("Fetched ideas:", res.data);
+        const res = await axios.get(
+          `/api/user-ideas/${userId}/`,
+          {
+            headers: { Authorization: `Bearer ${token}` }
+          }
+        );
         setIdeas(res.data);
       } catch (err) {
         console.error("Failed to fetch user ideas:", err);
@@ -26,14 +27,21 @@ const UserIdeasPage = () => {
     };
     fetchIdeas();
   }, [userId]);
-
+ 
   return (
     <div className="flex flex-col min-h-screen bg-teal-50">
-     
       <Header />
- 
-      {/* Content */}
       <main className="flex-1 p-6 pt-24 pb-10">
+        <div className="mb-4">
+          <button
+            onClick={() => navigate(-1)}
+            className="px-4 py-2 bg-teal-600 text-white rounded-lg shadow-md
+                       hover:bg-teal-700 transition duration-200 cursor-pointer"
+          >
+            ← Back
+          </button>
+        </div>
+ 
         <h2 className="text-xl font-bold text-gray-800 mb-4 text-center">
           User Ideas
         </h2>
@@ -62,11 +70,9 @@ const UserIdeasPage = () => {
           ))}
         </div>
       </main>
- 
       <Footer />
- 
     </div>
   );
 };
-
+ 
 export default UserIdeasPage;

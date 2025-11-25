@@ -55,7 +55,7 @@ const Login = () => {
   return (
     <div className="min-h-screen flex flex-col justify-between bg-teal-100 text-black">
       <Header />
-      <div className="flex-grow flex items-center justify-center">
+      <div className="flex-grow flex items-center pt-13 justify-center">
         <form onSubmit={handleSubmit} className="bg-white p-8 rounded-xl shadow-2xl w-full max-w-md">
           <h2 className="text-2xl font-bold mb-2 text-center">Login</h2>
           <p className="text-sm text-gray-600 mb-6 text-center">Please sign in to continue</p>

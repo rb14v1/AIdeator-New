@@ -3,14 +3,14 @@ import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import Header from "../Header";
 import Footer from "../Footer";
-
+ 
 const IdeaListPage = () => {
-  const { type } = useParams(); 
+  const { type } = useParams();
   const navigate = useNavigate();
   const normalizedType = type === "approved" ? "approved" : "all";
   const [ideas, setIdeas] = useState([]);
   const [loading, setLoading] = useState(true);
-
+ 
   useEffect(() => {
     const fetchIdeas = async () => {
       try {
@@ -18,7 +18,7 @@ const IdeaListPage = () => {
         const res = await axios.get("/api/ranked/", {
           headers: { Authorization: `Bearer ${token}` }
         });
-
+ 
         const mapped = res.data.results.map((idea) => ({
           id: idea.conversation_id,
           title: idea.idea_name,
@@ -27,12 +27,12 @@ const IdeaListPage = () => {
           user: idea.user?.email || "Unknown",
           timestamp: idea.approved_at || ""
         }));
-
+ 
         const filtered =
           normalizedType === "approved"
             ? mapped.filter((i) => i.accepted)
             : mapped;
-
+ 
         setIdeas(filtered.sort((a, b) => b.score - a.score));
       } catch (err) {
         console.error("Failed to fetch ideas:", err);
@@ -41,20 +41,28 @@ const IdeaListPage = () => {
         setLoading(false);
       }
     };
-
+ 
     fetchIdeas();
   }, [type]);
-
+ 
   return (
-        <div className="flex flex-col min-h-screen bg-teal-50">
- 
+    <div className="flex flex-col min-h-screen bg-teal-50">
       <Header />
- 
-      {/* Page Content */}
       <main className="flex-1 px-6 pt-24 pb-10">
-        <h1 className="text-2xl font-bold text-black mb-4 text-center">
-          {type === "approved" ? "✅ Approved Ideas" : "📝 All Ideas"}
-        </h1>
+        <div className="flex items-center justify-between mb-6">
+          <button
+            onClick={() => navigate(-1)}
+            className="px-4 py-2 bg-teal-600 text-white rounded-lg shadow-md
+                       hover:bg-teal-700 transition duration-200 cursor-pointer"
+          >
+            ← Back
+          </button>
+ 
+          <h1 className="text-2xl font-bold text-black text-center flex-1">
+            {type === "approved" ? "✅ Approved Ideas" : "📝 All Ideas"}
+          </h1>
+          <div className="w-20"></div>
+        </div>
  
         {loading ? (
           <p className="text-gray-500 text-center">Loading ideas...</p>
@@ -66,7 +74,8 @@ const IdeaListPage = () => {
               <div
                 key={idea.id}
                 onClick={() => navigate(`/conversation/${idea.id}`)}
-                className="cursor-pointer bg-teal-100 p-4 rounded-lg shadow hover:shadow-md border border-teal-300 transition"
+                className="cursor-pointer bg-teal-100 p-4 rounded-lg shadow hover:shadow-md
+                           border border-teal-300 transition"
               >
                 <h3 className="text-lg font-semibold text-gray-800 mb-1">
                   {idea.title}
@@ -85,6 +94,5 @@ const IdeaListPage = () => {
     </div>
   );
 };
-
+ 
 export default IdeaListPage;
-

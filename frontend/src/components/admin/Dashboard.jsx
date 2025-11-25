@@ -23,23 +23,18 @@ function Dashboard() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [showProfileMenu, setShowProfileMenu] = useState(false);
  
-  // Create ref for scrolling to all ideas section
   const allIdeasRef = useRef(null);
  
   const navigate = useNavigate();
-  //  LOGOUT FUNCTION
   const handleLogout = () => {
-    // Clears all authentication data from local storage
     localStorage.removeItem('accessToken');
     localStorage.removeItem('refreshToken');
     localStorage.removeItem('isAdmin');
     localStorage.removeItem('username');
     localStorage.removeItem('email');
  
-    // Redirect the user to the login page
     navigate('/login', { replace: true });
   };
-  // Function to scroll to all ideas
   const scrollToAllIdeas = () => {
     allIdeasRef.current?.scrollIntoView({
       behavior: 'smooth',
@@ -78,9 +73,6 @@ function Dashboard() {
     return `Just now`;
   };
  
- 
- 
- 
   const [stats, setStats] = useState([]);
  
   const fetchStats = async () => {
@@ -109,8 +101,6 @@ function Dashboard() {
     fetchStats();
   }, []);
  
- 
-  // User Ideas Data
   const [userIdeas, setUserIdeas] = useState([]);
   useEffect(() => {
     const fetchUserIdeas = async () => {
@@ -126,9 +116,9 @@ function Dashboard() {
           score: idea.total_score,
           accepted: idea.is_approved,
           user: idea.user,
-          timestamp: idea.approved_at || ""  // optional
+          timestamp: idea.approved_at || "" 
         }));
-        // Sort: unreviewed first, then reviewed — both by score descending
+        
         const sortedIdeas = mappedIdeas.sort((a, b) => {
           const aPending = a.accepted === null || a.accepted === false;
           const bPending = b.accepted === null || b.accepted === false;
@@ -246,8 +236,7 @@ function Dashboard() {
     fetchRankings();
   }, []);
  
- 
-  // Activity
+
   const [range, setRange] = useState("7");
   const [weeklyData, setWeeklyData] = useState([]);
  
@@ -277,7 +266,6 @@ function Dashboard() {
       });
   }, [range]);
  
-  // Rankings Graph Data (Top 6 users by score)
   const rankingsGraphData = Array.isArray(rankings) ? rankings.slice(0, 6) : [];
  
  
@@ -348,39 +336,22 @@ function Dashboard() {
       setSelectedConversation([]);
     }
   };
- 
- 
- 
- 
+
+  const initialsFromName = (name = "") => {
+    return name.split(" ").map(n => n[0] || '').join('').slice(0, 2).toUpperCase();
+  };
+
+  const customScrollbarStyle = `
+    .custom-scrollbar::-webkit-scrollbar { width: 10px; }
+    .custom-scrollbar::-webkit-scrollbar-track { background: #f1f5f9; border-radius: 10px; }
+    .custom-scrollbar::-webkit-scrollbar-thumb { background: #0d9488; border-radius: 10px; }
+    .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #0f766e; }
+    .custom-scrollbar { scrollbar-width: thin; scrollbar-color: #0d9488 #f1f5f9; }
+  `;
  
   return (
-    <div className="w-full h-screen overflow-y-auto bg-white">
-      <style>{`
-        /* Custom scrollbar for webkit browsers */
-        .custom-scrollbar::-webkit-scrollbar {
-          width: 8px;
-          }
-         
-          .custom-scrollbar::-webkit-scrollbar-track {
-            background: #f1f5f9;
-            border-radius: 10px;
-            }
-       
-            .custom-scrollbar::-webkit-scrollbar-thumb {
-              background: #0d9488;
-              border-radius: 10px;
-              }
-             
-              .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-                background: #0f766e;
-                }
-               
-                /* Firefox scrollbar */
-                .custom-scrollbar {
-                  scrollbar-width: thin;
-                  scrollbar-color: #0d9488 #f1f5f9;
-                  }
-                  `}</style>
+    <div className="w-full h-screen overflow-y-auto bg-gray-50">
+      <style>{customScrollbarStyle}</style>
  
       {sidebarOpen && (
         <div
@@ -389,7 +360,6 @@ function Dashboard() {
         />
       )}
  
- 
       <div className="flex-1 flex flex-col overflow-hidden">
         <Header
           onToggleSidebar={() => setSidebarOpen(!sidebarOpen)}
@@ -397,225 +367,162 @@ function Dashboard() {
           setShowProfileMenu={setShowProfileMenu}
           handleLogout={handleLogout}
         />
+
         <main className="flex-1 overflow-y-auto bg-white p-6 w-full mt-20">
+ 
           <div className="mb-8">
             <h1 className="text-3xl font-bold text-gray-800">Dashboard Overview</h1>
             <p className="text-gray-600 mt-1">Welcome back! Here's the overview of AI-Ideas at your firm.</p>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-            {stats.map((stat, index) => {
-              const trendColor = stat.trend.startsWith('+') ? 'text-green-600' : 'text-red-600';
-              return (
-                <div
-                  key={index}
-                  onClick={() => handleCardClick(stat.title)}
-                  className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow cursor-pointer hover:ring-2 hover:ring-teal-500"
-                >
-                  <div className="flex items-center justify-between mb-4">
-                    <div className={`w-12 h-12 bg-gradient-to-br ${colorClasses[stat.color]} rounded-lg flex items-center justify-center text-2xl`}>
-                      {stat.icon}
-                    </div>
-                    <span className={`text-sm font-semibold ${trendColor}`}>{stat.trend}</span>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+            {stats.map((stat, idx) => (
+              <div
+                key={idx}
+                className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 flex flex-col justify-between hover:shadow-md transition cursor-pointer"
+                onClick={() => handleCardClick(stat.title)}
+              >
+                <div className="flex items-center justify-between">
+                  <div className={`w-12 h-12 rounded-lg flex items-center justify-center text-2xl bg-gradient-to-br ${colorClasses[stat.color] || colorClasses.blue}`}>
+                    {stat.icon}
                   </div>
-                  <h3 className="text-gray-600 text-sm font-medium mb-1">{stat.title}</h3>
-                  <p className="text-3xl font-bold text-gray-800">{stat.value}</p>
+                  <div className="text-sm font-semibold text-gray-500">{stat.trend}</div>
                 </div>
-              );
-            })}
+                <div className="mt-6">
+                  <p className="text-sm text-gray-600">{stat.title}</p>
+                  <p className="text-3xl font-bold text-gray-800 mt-2">{stat.value}</p>
+                </div>
+              </div>
+            ))}
           </div>
           <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mb-8">
             <div className="flex items-center justify-between mb-6">
               <h3 className="text-lg font-bold text-gray-800">💡 Recent User Ideas</h3>
+              <div className="flex items-center gap-3">
+                <button
+                  className="px-3 py-1 rounded border border-gray-200 text-sm hover:bg-gray-50 transition"
+                  onClick={() => scrollToAllIdeas()}
+                >
+                  View All
+                </button>
+              </div>
             </div>
+ 
             <div className="max-h-[600px] overflow-y-auto pr-2 custom-scrollbar">
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 {userIdeas.map((idea) => (
                   <div
                     key={idea.id}
-                    className="relative border bg-teal-100 rounded-lg p-4 hover:shadow-md transition-shadow flex flex-col justify-between"
+                    className="relative border bg-teal-50 rounded-lg p-4 hover:shadow-md transition-shadow flex flex-col justify-between"
                   >
-                    <div className="absolute top-3 right-3 text-xs font-semibold text-gray-700">
- 
-                      <span className="text-white text-xs font-medium">
-                        {(idea.user?.email || "User")
-                          .split("@")[0]
-                          .split(".")
-                          .map((n) => n[0].toUpperCase())
-                          .join("")}
-                      </span>
-                    </div>
-                    <div className="absolute top-3 right-3 flex items-center text-yellow-500 text-xs font-semibold gap-1">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="currentColor"
-                        viewBox="0 0 20 20"
-                        className="w-4 h-4"
-                      >
-                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                      </svg>
-                      <span>Score: {Math.floor(idea.score)}</span>
-                    </div>
-                    <div className="mt-10">
-                      <p className="text-sm text-gray-800 font-medium mb-2 line-clamp-2">
-                        {idea.title}
-                      </p>
-                      <span className="text-xs text-gray-500">{idea.timestamp}</span>
-                    </div>
-                    <div className="flex items-center justify-between mt-3 pt-3 border-t border-gray-100">
-                      <div className="flex gap-2 ml-auto">
-                        <button
-                          className={`px-2 py-1 text-xs rounded-md transition-colors flex items-center gap-1 ${idea.accepted
-                            ? "bg-teal-500 text-white cursor-not-allowed"
-                            : "bg-teal-400 hover:bg-teal-400 text-black"
-                            }`}
-                          onClick={() => handleApprove(idea.id)}
-                          disabled={idea.accepted}
-                        >
-                          {idea.accepted ? (
-                            <>
-                              <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                strokeWidth={2}
-                                stroke="currentColor"
-                                className="w-4 h-4"
-                              >
-                                <path
-                                  strokeLinecap="round"
-                                  strokeLinejoin="round"
-                                  d="M5 13l4 4L19 7"
-                                />
-                              </svg>
-                              Accepted
-                            </>
-                          ) : (
-                            "Accept"
-                          )}
-                        </button>
-                        {!idea.accepted && (
-                          <button
-                            className="px-2 py-1 text-xs bg-red-100 hover:bg-red-200 text-red-700 rounded-md transition-colors"
-                            onClick={() => handleReject(idea.id)}
-                          >
-                            Reject
-                          </button>
-                        )}
+                    <div className="flex justify-between items-start">
+                      <div>
+                        <h4 className="text-md font-semibold text-gray-800 mb-1 line-clamp-2">{idea.title}</h4>
+                        <span className="text-xs text-gray-500">{idea.timestamp}</span>
                       </div>
+                      <div className="text-right">
+                        <div className="text-yellow-500 font-semibold text-sm">⭐ Score: {Math.floor(Number(idea.score) || 0)}</div>
+                        <div className={`mt-2 text-xs inline-flex items-center px-2 py-1 rounded ${idea.accepted ? 'bg-teal-600 text-white' : 'bg-white text-gray-600 border border-gray-200'}`}>
+                          {idea.accepted ? 'Accepted' : 'Pending'}
+                        </div>
+                      </div>
+                    </div>
+ 
+                    <div className="mt-4 flex justify-end gap-2">
+                      <button
+                        className={`px-3 py-1 text-xs rounded-md transition-colors flex items-center gap-1 ${idea.accepted ? "bg-teal-500 text-white cursor-not-allowed" : "bg-teal-400 hover:bg-teal-500 text-black"}`}
+                        onClick={() => handleApprove(idea.id)}
+                        disabled={idea.accepted}
+                      >
+                        {idea.accepted ? 'Accepted' : 'Accept'}
+                      </button>
+                      {!idea.accepted && (
+                        <button
+                          className="px-3 py-1 text-xs bg-red-100 hover:bg-red-200 text-red-700 rounded-md transition-colors"
+                          onClick={() => handleReject(idea.id)}
+                        >
+                          Reject
+                        </button>
+                      )}
                     </div>
                   </div>
                 ))}
               </div>
             </div>
           </div>
- 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
             <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-              <div className="flex items-center justify-between mb-6">
-                <h3 className="text-lg font-bold text-gray-800">🏆 Top Ideas</h3>
-              </div>
+              <h3 className="text-lg font-bold text-gray-800 mb-4">🏆 Top Ideas</h3>
+ 
               <div className="space-y-4">
-                {[...userIdeas]
-                  .sort((a, b) => b.score - a.score)
-                  .slice(0, 6)
-                  .map((idea, index) => (
-                    <div key={idea.id} className="flex items-center gap-3">
-                      <div className="flex-shrink-0 w-8 text-center">
-                        <span
-                          className={`inline-block w-6 h-6 rounded-full text-xs font-bold flex items-center justify-center border-2 ${index === 0
-                            ? "bg-yellow-100 text-yellow-700 border-yellow-300"
-                            : index === 1
-                              ? "bg-gray-100 text-gray-700 border-gray-300"
-                              : index === 2
-                                ? "bg-orange-100 text-orange-700 border-orange-300"
-                                : "bg-blue-50 text-blue-600 border-blue-200"
-                            }`}
-                        >
-                          {index + 1}
-                        </span>
+                {[...userIdeas].sort((a, b) => b.score - a.score).slice(0, 6).map((idea, index) => (
+                  <div key={idea.id} className="flex items-center gap-3">
+                    <div className={`flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold border-2
+                      ${index === 0 ? "bg-yellow-100 text-yellow-700 border-yellow-300"
+                        : index === 1 ? "bg-gray-100 text-gray-700 border-gray-300"
+                          : index === 2 ? "bg-orange-100 text-orange-700 border-orange-300"
+                            : "bg-blue-50 text-blue-600 border-blue-200"}`}>
+                      {index + 1}
+                    </div>
+                    <div className="flex-1">
+                      <div className="flex items-center justify-between">
+                        <span className="text-sm font-medium text-gray-800 line-clamp-1">{idea.title || "Untitled"}</span>
+                        <span className="text-yellow-600 text-sm">⭐ {typeof idea.score === 'number' ? idea.score.toFixed(1) : '—'}</span>
                       </div>
-                      <div className="flex-1">
-                        <div className="flex items-center justify-between mb-1">
-                          <span className="text-sm font-medium text-gray-800 line-clamp-1">
-                            {idea.title || "Untitled Idea"}
-                          </span>
-                          <div className="flex items-center text-yellow-500 text-xs font-semibold ml-2">
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              fill="currentColor"
-                              viewBox="0 0 20 20"
-                              className="w-4 h-4 mr-1"
-                            >
-                              <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                            </svg>
-                            {typeof idea.score === "number" ? idea.score.toFixed(1) : "—"}
-                          </div>
-                        </div>
-                        <div className="w-full bg-gray-100 rounded-full h-2">
-                          <div
-                            className={`h-2 rounded-full transition-all duration-500 ${idea.score > 0
-                              ? "bg-gradient-to-r from-teal-500 to-teal-400"
-                              : idea.score < 0
-                                ? "bg-gradient-to-r from-red-500 to-red-400"
-                                : "bg-gray-400"
-                              }`}
-                            style={{
-                              width: `${Math.min(Math.abs(idea.score), 100)}%`,
-                            }}
-                          />
-                        </div>
+                      <div className="w-full bg-gray-100 rounded-full h-2 mt-2">
+                        <div
+                          className="h-2 rounded-full transition-all duration-500 bg-teal-500"
+                          style={{ width: `${Math.min(Math.abs(Number(idea.score || 0)), 100)}%` }}
+                        />
                       </div>
                     </div>
-                  ))}
+                  </div>
+                ))}
               </div>
  
             </div>
+            <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+              <h3 className="text-lg font-bold text-gray-800 mb-4">🏅 User Rankings</h3>
+              <div className="space-y-3">
+                {rankingsGraphData.map((r, idx) => (
+                  <div key={r.id || idx} className="flex items-center justify-between gap-3">
+                    <div className="flex items-center gap-3">
+                      <div className={`w-10 h-10 rounded-full flex items-center justify-center ${idx === 0 ? 'bg-yellow-100' : idx === 1 ? 'bg-gray-100' : 'bg-blue-50'}`}>
+                        <span className="text-sm font-bold">{idx + 1}</span>
+                      </div>
+                      <div>
+                        <div className="text-sm font-medium text-gray-800">{r.username || r.name || 'User'}</div>
+                        <div className="text-xs text-gray-500">Score: {r.score}</div>
+                      </div>
+                    </div>
+                    <div className="text-sm text-gray-600">{r.score}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
-          <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+          <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mb-8">
             <div className="flex items-center justify-between mb-6">
               <h3 className="text-lg font-bold text-gray-800">📊 Activity</h3>
-              <select value={range}
-                onChange={(e) => setRange(e.target.value)}
-                className="text-sm border border-gray-300 rounded-lg px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-teal-500"
-              >
+              <select value={range} onChange={(e) => setRange(e.target.value)} className="text-sm border border-gray-300 rounded-lg px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-teal-500">
                 <option value="7">Last 7 days</option>
                 <option value="30">Last 30 days</option>
                 <option value="90">Last 90 days</option>
               </select>
             </div>
-            <ResponsiveContainer width="100%" height={250}>
+ 
+            <ResponsiveContainer width="100%" height={260}>
               <LineChart data={weeklyData}>
                 <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
                 <XAxis dataKey="day" stroke="#6b7280" />
                 <YAxis stroke="#6b7280" />
-                <Tooltip
-                  contentStyle={{
-                    backgroundColor: "#fff",
-                    borderRadius: "8px",
-                    border: "1px solid #e5e7eb",
-                  }}
-                />
+                <Tooltip contentStyle={{ backgroundColor: "#fff", borderRadius: "8px", border: "1px solid #e5e7eb" }} />
                 <Legend />
-                <Line
-                  type="monotone"
-                  dataKey="totalIdeas"
-                  stroke="#14b8a6"
-                  strokeWidth={2.5}
-                  dot={{ r: 4 }}
-                  activeDot={{ r: 6 }}
-                  name="Total Ideas"
-                />
-                <Line
-                  type="monotone"
-                  dataKey="approvedIdeas"
-                  stroke="#0ea5e9"
-                  strokeWidth={2.5}
-                  dot={{ r: 4 }}
-                  activeDot={{ r: 6 }}
-                  name="Approved Ideas"
-                />
+                <Line type="monotone" dataKey="totalIdeas" stroke="#14b8a6" strokeWidth={2.5} dot={{ r: 4 }} activeDot={{ r: 6 }} name="Total Ideas" />
+                <Line type="monotone" dataKey="approvedIdeas" stroke="#0ea5e9" strokeWidth={2.5} dot={{ r: 4 }} activeDot={{ r: 6 }} name="Approved Ideas" />
               </LineChart>
             </ResponsiveContainer>
+ 
             <div className="mt-6 flex items-center justify-center gap-6">
               <div className="flex items-center gap-2">
                 <div className="w-3 h-3 bg-teal-500 rounded-full"></div>
@@ -627,31 +534,27 @@ function Dashboard() {
               </div>
             </div>
           </div>
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
-            <div className="lg:col-span-2 bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-              <h3 className="text-lg font-bold text-gray-800 mb-4">Recent Users</h3>
-              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 gap-4">
-                {users.map((user) => (
-                  <div
-                    key={user.id}
-                    onClick={() => navigate(`/user-ideas/${user.id}`)}
-                    className="flex items-center gap-3 p-3 border border-gray-200 rounded-lg hover:shadow-md transition-shadow cursor-pointer">
-                    <div className="w-12 h-12 bg-gradient-to-br from-teal-500 to-teal-600 rounded-full flex items-center justify-center flex-shrink-0">
-                      <span className="text-white font-medium">
-                        {user.name.split(" ").map((n) => n[0]).join("")}
-                      </span>
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <h4 className="text-sm font-semibold text-gray-800 truncate">
-                        {user.name}
-                      </h4>
-                      <p className="text-xs text-gray-600 truncate">{user.email}</p>
-                    </div>
+          <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+            <h3 className="text-lg font-bold text-gray-800 mb-6">Recent Users</h3>
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+              {users.map((user) => (
+                <div
+                  key={user.id}
+                  onClick={() => navigate(`/user-ideas/${user.id}`)}
+                  className="flex items-center gap-3 p-3 border border-gray-200 rounded-lg hover:shadow-md transition-shadow cursor-pointer"
+                >
+                  <div className="w-12 h-12 bg-gradient-to-br from-teal-500 to-teal-600 rounded-full flex items-center justify-center flex-shrink-0">
+                    <span className="text-white font-medium">{initialsFromName(user.name || user.email || 'U')}</span>
                   </div>
-                ))}
-              </div>
+                  <div className="flex-1 min-w-0">
+                    <h4 className="text-sm font-semibold text-gray-800 truncate">{user.name || user.email}</h4>
+                    <p className="text-xs text-gray-600 truncate">{user.email}</p>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
+ 
         </main>
       </div >
       <Footer />
@@ -659,4 +562,5 @@ function Dashboard() {
   );
 }
 export default Dashboard;
+ 
  

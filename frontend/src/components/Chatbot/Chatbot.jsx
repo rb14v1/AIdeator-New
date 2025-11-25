@@ -90,47 +90,36 @@ const Chatbot = () => {
  
   return (
     <div
-      className={`min-h-screen flex flex-col transition-colors duration-300 ${
-        darkMode ? "bg-gray-900 text-white" : "bg-teal-100 text-black"
-      }`}
+      className={`min-h-screen overflow-hidden flex flex-col transition-colors duration-300 ${darkMode ? "bg-gray-900 text-white" : "bg-teal-100 text-black"
+        }`}
     >
-      {/* Header with correct props */}
       <Header
         handleLogout={handleLogout}
         showProfileMenu={showProfileMenu}
         setShowProfileMenu={setShowProfileMenu}
         onToggleSidebar={() => setSidebarOpen(!sidebarOpen)}
       />
- 
-      {/* Right aligned button */}
-      <div className="mt-20 px-6 flex justify-end">
+      <div className="mt-20 px-6 flex justify-end gap-3">
         <ViewIdeas />
       </div>
- 
-      {/* Chat container */}
       <div className="flex flex-col items-center flex-1 px-4 pb-4">
         <div
           className={`flex flex-col w-full sm:w-11/12 md:w-3/4 lg:w-2/3 xl:w-1/2
-            h-[70vh] rounded-2xl overflow-hidden shadow-2xl border
+            h-[65vh] rounded-2xl overflow-hidden shadow-2xl border
             ${darkMode ? "border-gray-700 bg-black" : "border-teal-200 bg-white"}`}
         >
- 
-          {/* Chat Header */}
           <div
-            className={`flex justify-between items-center px-6 py-3 shadow-md ${
-              darkMode ? "bg-teal-900 text-white" : "bg-teal-600 text-white"
-            }`}
+            className={`flex justify-between items-center px-6 py-3 shadow-md ${darkMode ? "bg-teal-900 text-white" : "bg-teal-600 text-white"
+              }`}
           >
             <div className="flex items-center gap-3">
               <h3 className="text-lg font-semibold">Aideator</h3>
             </div>
           </div>
  
-          {/* Chat Body */}
           <div
-            className={`flex-1 flex flex-col gap-3 overflow-y-auto p-5 ${
-              darkMode ? "bg-gray-800" : "bg-teal-50"
-            }`}
+            className={`flex-1 overflow-x-hidden flex flex-col gap-3 overflow-y-hidden p-5 ${darkMode ? "bg-gray-800" : "bg-teal-50"
+              }`}
           >
             {messages.map((msg, i) => (
               <Message key={i} sender={msg.sender} text={msg.text} darkMode={darkMode} />
@@ -150,8 +139,7 @@ const Chatbot = () => {
               </div>
             )}
           </div>
- 
-          {/* Input */}
+
           {options.length === 0 && !isComplete && (
             <MessageInput onSend={handleSend} darkMode={darkMode} />
           )}
