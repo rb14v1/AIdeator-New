@@ -447,7 +447,7 @@ function Dashboard() {
             </div>
           </div>
           <div className="flex flex-col lg:flex-row gap-6 mb-8">
-            <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+            <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 flex-1">
               <h3 className="text-lg font-bold text-gray-800 mb-4">🏆 Top Ideas</h3>
  
               <div className="space-y-4">
