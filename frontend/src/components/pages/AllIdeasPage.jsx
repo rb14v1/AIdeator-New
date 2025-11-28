@@ -62,7 +62,8 @@ function AllIdeasPage() {
 </div>
  
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-          {ideas.map((idea) => (
+          {ideas.filter((idea) => idea.is_approved === true || idea.accepted === true)
+  .map((idea) =>  (
             <div key={idea.id} className="flip-card">
               <div className="flip-card-inner">
                 <div className="flip-card-front bg-white p-4 rounded-lg shadow-md">
