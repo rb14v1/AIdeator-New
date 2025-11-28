@@ -477,25 +477,6 @@ function Dashboard() {
               </div>
  
             </div>
-            <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-              <h3 className="text-lg font-bold text-gray-800 mb-4">🏅 User Rankings</h3>
-              <div className="space-y-3">
-                {rankingsGraphData.map((r, idx) => (
-                  <div key={r.id || idx} className="flex items-center justify-between gap-3">
-                    <div className="flex items-center gap-3">
-                      <div className={`w-10 h-10 rounded-full flex items-center justify-center ${idx === 0 ? 'bg-yellow-100' : idx === 1 ? 'bg-gray-100' : 'bg-blue-50'}`}>
-                        <span className="text-sm font-bold">{idx + 1}</span>
-                      </div>
-                      <div>
-                        <div className="text-sm font-medium text-gray-800">{r.username || r.name || 'User'}</div>
-                        <div className="text-xs text-gray-500">Score: {r.score}</div>
-                      </div>
-                    </div>
-                    <div className="text-sm text-gray-600">{r.score}</div>
-                  </div>
-                ))}
-              </div>
-            </div>
           </div>
           <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mb-8">
             <div className="flex items-center justify-between mb-6">
