@@ -47,17 +47,19 @@ function AllIdeasPage() {
       />
       <main className="flex-1 px-6 pt-22 pb-10">
         <div className="relative mb-6 px-4 flex items-center">
-          <h2 className="flex-1 text-2xl font-bold flex justify-center items-center gap-2">
-            💡 All Ideas
-          </h2>
-          <button
-            onClick={() => navigate("/user-page")}
-            className="absolute right-4 -top-3 px-4 py-2 bg-teal-600 text-white rounded-lg font-medium
-    shadow-md hover:bg-teal-700 transition duration-200 cursor-pointer"
-          >
-            Add Idea
-          </button>
-        </div>
+  <h2 className="flex-1 text-2xl font-bold flex justify-center items-center gap-2">
+    💡 All Ideas
+  </h2>
+
+  <button
+    onClick={() => navigate("/user-page")}
+    className="absolute right-4 top-1/2 -translate-y-1/2
+               px-4 py-2 bg-teal-600 text-white rounded-lg font-medium
+               shadow-md hover:bg-teal-700 transition duration-200 cursor-pointer"
+  >
+    Add Idea
+  </button>
+</div>
  
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
           {ideas.map((idea) => (

@@ -398,14 +398,6 @@ function Dashboard() {
           <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mb-8">
             <div className="flex items-center justify-between mb-6">
               <h3 className="text-lg font-bold text-gray-800">💡 Recent User Ideas</h3>
-              <div className="flex items-center gap-3">
-                <button
-                  className="px-3 py-1 rounded border border-gray-200 text-sm hover:bg-gray-50 transition"
-                  onClick={() => scrollToAllIdeas()}
-                >
-                  View All
-                </button>
-              </div>
             </div>
  
             <div className="max-h-[600px] overflow-y-auto pr-2 custom-scrollbar">
@@ -418,7 +410,9 @@ function Dashboard() {
                     <div className="flex justify-between items-start">
                       <div>
                         <h4 className="text-md font-semibold text-gray-800 mb-1 line-clamp-2">{idea.title}</h4>
-                        <span className="text-xs text-gray-500">{idea.timestamp}</span>
+                        <span className="text-xs text-gray-500">
+                          {idea.timestamp ? formatRelativeTime(idea.timestamp) : ''}
+                        </span>
                       </div>
                       <div className="text-right">
                         <div className="text-yellow-500 font-semibold text-sm">⭐ Score: {Math.floor(Number(idea.score) || 0)}</div>
@@ -427,23 +421,25 @@ function Dashboard() {
                         </div>
                       </div>
                     </div>
- 
                     <div className="mt-4 flex justify-end gap-2">
-                      <button
-                        className={`px-3 py-1 text-xs rounded-md transition-colors flex items-center gap-1 ${idea.accepted ? "bg-teal-500 text-white cursor-not-allowed" : "bg-teal-400 hover:bg-teal-500 text-black"}`}
-                        onClick={() => handleApprove(idea.id)}
-                        disabled={idea.accepted}
-                      >
-                        {idea.accepted ? 'Accepted' : 'Accept'}
-                      </button>
                       {!idea.accepted && (
+                      <div className="mt-4 flex justify-end gap-2">
                         <button
-                          className="px-3 py-1 text-xs bg-red-100 hover:bg-red-200 text-red-700 rounded-md transition-colors"
+                          className="px-3 py-1 text-xs rounded-md transition-colors flex items-center gap-1 
+                                    bg-teal-400 hover:bg-teal-500 text-black"
+                          onClick={() => handleApprove(idea.id)}
+                        >
+                          Accept
+                        </button>
+                        <button
+                          className="px-3 py-1 text-xs bg-red-100 hover:bg-red-200 text-red-700 
+                                    rounded-md transition-colors"
                           onClick={() => handleReject(idea.id)}
                         >
                           Reject
                         </button>
-                      )}
+                      </div>
+                    )}
                     </div>
                   </div>
                 ))}
