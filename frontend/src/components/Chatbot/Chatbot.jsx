@@ -90,7 +90,7 @@ const Chatbot = () => {
  
   return (
     <div
-      className={`min-h-screen overflow-hidden flex flex-col transition-colors duration-300 ${darkMode ? "bg-gray-900 text-white" : "bg-teal-100 text-black"
+      className={`min-h-screen overflow-y-auto flex flex-col transition-colors duration-300 ${darkMode ? "bg-gray-900 text-white" : "bg-teal-100 text-black"
         }`}
     >
       <Header
@@ -118,7 +118,7 @@ const Chatbot = () => {
           </div>
  
           <div
-            className={`flex-1 overflow-x-hidden flex flex-col gap-3 overflow-y-hidden p-5 ${darkMode ? "bg-gray-800" : "bg-teal-50"
+            className={`flex-1 overflow-x-hidden flex flex-col gap-3 overflow-y-auto p-5 ${darkMode ? "bg-gray-800" : "bg-teal-50"
               }`}
           >
             {messages.map((msg, i) => (
