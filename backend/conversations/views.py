@@ -46,7 +46,7 @@ class AllIdeasView(APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request):
-        conversations = ConversationState.objects.filter(is_complete=True, is_rejected=False).order_by('-total_score')
+        conversations = ConversationState.objects.filter(is_complete=True, is_rejected=False, is_approved=True).order_by('-total_score')
 
         data = []
         for convo in conversations:

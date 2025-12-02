@@ -55,11 +55,10 @@ function AllIdeasPage() {
     onClick={() => navigate("/user-page")}
     className="absolute right-4 top-1/2 -translate-y-1/2
                px-4 py-2 bg-teal-600 text-white rounded-lg font-medium
-               shadow-md hover:bg-teal-700 transition duration-200 cursor-pointer"
-  >
-    Add Idea
-  </button>
-</div>
+               shadow-md hover:bg-teal-700 transition duration-200 cursor-pointer">
+      Add Idea
+    </button>
+  </div>
  
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
           {ideas.map((idea) => (
