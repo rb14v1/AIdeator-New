@@ -65,9 +65,9 @@ function AllIdeasPage() {
             <div key={idea.id} className="flip-card">
               <div className="flip-card-inner">
                 <div className="flip-card-front bg-white p-4 rounded-lg shadow-md">
-                  <div className="text-lg text-gray-800 mb-2">
+                  {/* <div className="text-lg text-gray-800 mb-2">
                     {idea.user?.split("@")[0] || "Unknown"}
-                  </div>
+                  </div> */}
                   <h4 className="text-xl font-bold text-gray-800 text-center">
                     {idea.name || "Untitled"}
                   </h4>
