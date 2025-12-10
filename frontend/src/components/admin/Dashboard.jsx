@@ -405,8 +405,8 @@ function Dashboard() {
                 {userIdeas.map((idea) => (
                   <div
                     key={idea.id}
-                    className="relative border bg-teal-50 rounded-lg p-4 hover:shadow-md transition-shadow flex flex-col justify-between"
-                  >
+                    className="relative border bg-teal-50 rounded-lg p-4 hover:shadow-md transition-shadow 
+             flex flex-col justify-between h-[230px] overflow-hidden">
                     <div className="flex justify-between items-start">
                       <div>
                         <h4 className="text-md font-semibold text-gray-800 mb-1 line-clamp-2">{idea.title}</h4>
